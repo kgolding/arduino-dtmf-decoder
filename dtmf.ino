@@ -49,13 +49,13 @@ void setup() {
   pinMode(led, OUTPUT);
   Serial.begin(9600);
 
-  Serial.println("DTMF Decoder V0.9 - Kevin Golding");
+  Serial.println("DTMF Decoder V1.0 - Kevin Golding");
   Serial.println("Send H <CR> for help");
 
   EEPROM.get(EEPROM_THRESHOLD, threshold);
   EEPROM.get(EEPROM_N, n);
   EEPROM.get(EEPROM_SAMPLING_RATE, sampling_rate);
-  if (isnan(threshold) || isnan(n) || isnan(sampling_rate)) {
+  if (threshold < 1 || n < 1 || sampling_rate < 1) {
     Serial.println("Error reading EEPROM, using default values");
     threshold = DEFAULT_THRESHOLD;
     n = DEFAULT_N;
@@ -121,7 +121,7 @@ void handleSerialInput() {
             Serial.println("\tT 1000<CR>\tSet threshold to 1000");
             Serial.println("\tN 128<CR>\tSet 'n' aka block size");
             Serial.println("\tS 8926<CR>\tSet sampling rate");
-            Serial.println("\tR 999<CR>\tFacotry reset to defaults");
+            Serial.println("\tR 999<CR>\tFactory reset to defaults");
             Serial.println("\nThe space between the command character and the value is optional.");
             Serial.println("\nSettngs are stored in persistent memory.");
             Serial.println("\nOutput:");
